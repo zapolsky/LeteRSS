@@ -59,7 +59,7 @@ public class RssParse {
 		ArrayList<RssParse> rssParse = new ArrayList<RssParse>();
 
 		try {
-			URL uri = new URL("http://football.ua/rss2.ashx");
+			URL uri = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) uri
 					.openConnection();
 

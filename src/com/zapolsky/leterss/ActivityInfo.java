@@ -19,7 +19,7 @@ public class ActivityInfo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_info);
 
-		RssParse rss = MainActivity.rrsItem;
+		RssParse rss = RssActivity.rrsItem;
 
 		TextView rssDate = (TextView) findViewById(R.id.rssDate);
 		TextView rssTitle = (TextView) findViewById(R.id.rssTitle);

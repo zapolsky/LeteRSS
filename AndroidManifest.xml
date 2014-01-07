@@ -32,6 +32,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="RssActivity">
+            <intent-filter>
+                <action android:name="com.zapolsky.leterss.showrssfeed"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
