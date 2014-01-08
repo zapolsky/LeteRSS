@@ -75,6 +75,7 @@ public class RssActivity extends Activity {
 	private void refresh(String _url) {
 		rrsParses.clear();
 		rrsParses = RssParse.getParse(_url);
+		adapterAllRss.clear();
 		adapterAllRss.addAll(rrsParses);
 		adapterAllRss.notifyDataSetChanged();
 	}

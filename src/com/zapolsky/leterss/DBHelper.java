@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("create table rssfeedteble ("
 				+ "id integer primary key autoincrement,"
 				+ "title text,"
-				+" url text" + ");");
+				+ "url text" + ");");
 	}
 
 	@Override

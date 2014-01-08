@@ -6,5 +6,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="refresh">Refresh</string>
     <string name="addFeed">Add</string>
+    <string name="dialogName">Add new feed</string>
+    <string name="dialogTitle">Feed title</string>
+    <string name="dialogUrl">URL</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

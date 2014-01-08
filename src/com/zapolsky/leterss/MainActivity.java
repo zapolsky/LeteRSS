@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentValues;
+import android.app.DialogFragment;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
@@ -17,14 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
 
 	ListView rrsFeedLW;
 	ArrayList<RssFeed> feed = null;
-	DBHelper dbHelper;
+	public static DBmanipulation dbman;
 	ArrayAdapter<RssFeed> adapterRss;
 	public static RssFeed feedItem;
+	DialogFragment dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +32,19 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		feed = new ArrayList<RssFeed>();
 		feedItem = new RssFeed();
-		feedItem.setTitle("Добавте ленту.");
-		feedItem.setUrl("http://football.ua/rss2.ashx");
-		feed.add(feedItem);
-		// Android > 3.0
+		dbman = new DBmanipulation(this);
+		 feedItem.setTitle("Добавте ленту.");
+		 feedItem.setUrl("http://football.ua/rss2.ashx");
+		 feed.add(feedItem);
+		
+		
+		dialog = new AddFeedDialog();
+		
+		// Android > 3.0 
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
-		
-		dbRead();
-		
+		feed = dbman.dbRead();
 		adapterRss = new ArrayAdapter<RssFeed>(this, R.layout.item,
 				R.id.itemTT, feed);
 		adapterRss.setNotifyOnChange(true);
@@ -72,46 +75,16 @@ public class MainActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.addFeed:
-			
+			dialog.show(getFragmentManager(), "dialog");
+			feed.clear();
+			dbman.dbRead();
+			adapterRss.clear();
+			adapterRss.addAll(feed);
+			adapterRss.notifyDataSetChanged();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	private void dbwrite(String _title,String _url){
-		SQLiteDatabase db = dbHelper.getReadableDatabase();
-		ContentValues cv = new ContentValues();
-		
-		cv.put("title", _title);
-		cv.put("url", _url);
-		db.insert("rssfeedteble", null, cv);
-		db.close();
-	}
-	
-	private void dbRead(){
-		dbHelper = new DBHelper(this, "LeteRSSDB", null, 1);
-		SQLiteDatabase db = dbHelper.getWritableDatabase();
-		Cursor cursor = db.query("rssfeedteble", null, null, null, null, null,
-				null);
-		if (cursor != null) {
-			//feed.clear();			
-			
-			if (cursor.moveToFirst()) {
-				int titleCol = cursor.getColumnIndex("title");
-				int urlCol = cursor.getColumnIndex("url");
-				String title;
-				String url;
-				do {
-					title = cursor.getString(titleCol);
-					url = cursor.getString(urlCol);
-					new RssFeed();
-					feedItem.setTitle(title);
-					feedItem.setUrl(url);
-					feed.add(feedItem);
-				} while (cursor.moveToNext());
-			}
-		}
-		cursor.close();
-		db.close();
-	}
+
 }
