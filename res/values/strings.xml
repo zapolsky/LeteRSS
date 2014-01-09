@@ -10,5 +10,10 @@
     <string name="dialogTitle">Feed title</string>
     <string name="dialogUrl">URL</string>
     <string name="cancel">Cancel</string>
+    
+    <string-array name="rssFeedDialog">
+        <item name="delete">Delete</item>
+        <item name="update">Update</item>
+    </string-array>
 
 </resources>

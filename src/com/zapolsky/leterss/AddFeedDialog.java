@@ -42,6 +42,7 @@ public class AddFeedDialog extends DialogFragment implements OnClickListener {
 			MainActivity.feedItem.setTitle(_title);
 			MainActivity.feedItem.setUrl(_url);
 			MainActivity.dbman.dbwrite(_title, _url);
+			MainActivity.adatperUpdate();
 			dismiss();
 			break;
 		case R.id.btnCNCL:

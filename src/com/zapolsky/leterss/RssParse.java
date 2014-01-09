@@ -12,11 +12,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-public class RssParse {
+public class RssParse  {
 
 	private String titleName;
 	private String descText;
@@ -78,6 +79,7 @@ public class RssParse {
 				if (nodeList.getLength() > 0 && nodeList != null) {
 					for (int i = 0; i < nodeList.getLength(); i++) {
 						Element entry = (Element) nodeList.item(i);
+						String _imgLink;
 
 						Element titleElement = (Element) entry
 								.getElementsByTagName("title").item(0);
@@ -89,17 +91,22 @@ public class RssParse {
 								.getElementsByTagName("link").item(0);
 						Element imgLinkElement = (Element) entry
 								.getElementsByTagName("enclosure").item(0);
-
 						String _titleName = titleElement.getFirstChild()
 								.getNodeValue();
 						String _descText = descriptionElement.getFirstChild()
 								.getNodeValue();
+						
 						@SuppressWarnings("deprecation")
 						Date _publicationDate = new Date(publicationDateElement
 								.getFirstChild().getNodeValue());
 						String _link = linkElement.getFirstChild()
 								.getNodeValue();
-						String _imgLink = imgLinkElement.getAttribute("url");
+						if (imgLinkElement != null) {
+							_imgLink = imgLinkElement
+									.getAttribute("url");
+						}else {
+							_imgLink = "";
+						}
 
 						RssParse rss = new RssParse(_titleName, _descText,
 								_publicationDate, _link, _imgLink);
@@ -113,12 +120,13 @@ public class RssParse {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.w("Exeption",e);
+			Log.w("Exeption", e);
 		}
 
 		return rssParse;
 
 	}
+
 	@SuppressLint("SimpleDateFormat")
 	@Override
 	public String toString() {

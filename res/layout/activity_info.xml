@@ -27,7 +27,7 @@
         android:id="@+id/rssImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="Description"
+        android:contentDescription="@string/app_name"
         android:padding="10dp" />
 
     <TextView
